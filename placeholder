@@ -1,0 +1,12 @@
+# Create empty CSS files
+touch css/responsive.css css/dashboard.css
+
+# Create empty JS files
+touch js/auth.js js/student.js js/employee.js js/admin.js js/orders.js
+
+# Create placeholder images (or download actual images)
+echo "Placeholder" > assets/images/logo.png
+echo "Placeholder" > assets/images/hero-bg.jpg
+
+# Create basic README
+echo "# Smart Canteen Project" > README.md

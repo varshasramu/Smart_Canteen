@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Canteen - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Login Form Section */
+        .login-form-section {
+            flex: 1;
+            background-color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo i {
+            font-size: 3rem;
+            margin-right: 15px;
+            color: #ff9800;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+            padding-left: 15px;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #4a6491;
+            outline: none;
+        }
+        
+        .login-btn {
+            background-color: #4a6491;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            background-color: #2c3e50;
+        }
+        
+        .login-btn i {
+            margin-right: 10px;
+        }
+        
+        .error-message {
+            background-color: #fdedec;
+            color: #e74c3c;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: #4a6491;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        /* Login Sidebar */
+        .login-sidebar {
+            flex: 1;
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .sidebar-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .sidebar-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: 40px 0;
+        }
+        
+        .features-list li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .features-list i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            margin-top: 3px;
+            color: #ff9800;
+        }
+        
+        .feature-text h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .feature-text p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+        
+        .testimonial {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author i {
+            margin-right: 10px;
+            color: #ff9800;
+        }
+        
+        /* Back to Home Link */
+        .back-home-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-home-link a {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .back-home-link a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Admin Dashboard (Hidden by Default) */
+        .admin-dashboard {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #2c3e50, #1a2530);
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .logo-small {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .logo-small i {
+            font-size: 1.8rem;
+            margin-right: 10px;
+            color: #ff9800;
+        }
+        
+        .logo-small h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+        
+        .nav-links {
+            list-style: none;
+            padding: 0 15px;
+            flex: 1;
+        }
+        
+        .nav-links li {
+            margin-bottom: 5px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            color: #b0b7c3;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .nav-links i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .admin-info {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ff9800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .admin-details h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .admin-details p {
+            font-size: 0.8rem;
+            color: #b0b7c3;
+        }
+        
+        /* Main content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+        
+        .dashboard-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-header h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            border-left: 5px solid;
+        }
+        
+        .stat-card:nth-child(1) { border-left-color: #3498db; }
+        .stat-card:nth-child(2) { border-left-color: #f1c40f; }
+        .stat-card:nth-child(3) { border-left-color: #9b59b6; }
+        .stat-card:nth-child(4) { border-left-color: #2ecc71; }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.5rem;
+            background-color: #f8f9fa;
+        }
+        
+        .stat-info h3 {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .stat-info .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        /* Orders Table */
+        .orders-table-container {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .orders-table thead {
+            background-color: #f8f9fa;
+        }
+        
+        .orders-table th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .orders-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+        
+        .orders-table tbody tr {
+            transition: background-color 0.2s;
+        }
+        
+        .orders-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .order-id {
+            font-weight: 600;
+            color: #3498db;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background-color: #fef9e7;
+            color: #f1c40f;
+        }
+        
+        .status-processing {
+            background-color: #f4ecf7;
+            color: #9b59b6;
+        }
+        
+        .status-ready {
+            background-color: #e8f6f3;
+            color: #1abc9c;
+        }
+        
+        .status-completed {
+            background-color: #eafaf1;
+            color: #27ae60;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn i {
+            margin-right: 5px;
+        }
+        
+        .btn-process {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-process:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-ready {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .btn-ready:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-complete {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .btn-complete:hover {
+            background-color: #8e44ad;
+        }
+        
+        /* Menu Management Section */
+        .menu-management {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .menu-management-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .menu-management-header h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .add-item-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .add-item-btn:hover {
+            background-color: #219653;
+        }
+        
+        .menu-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-item-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        
+        .menu-item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-item-image {
+            height: 160px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .menu-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .menu-item-image .placeholder {
+            font-size: 2.5rem;
+            color: #adb5bd;
+        }
+        
+        .menu-item-details {
+            padding: 15px;
+        }
+        
+        .menu-item-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .menu-item-price {
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .menu-item-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .menu-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .menu-item-btn {
+            flex: 1;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .edit-item-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .edit-item-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .delete-item-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .delete-item-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Add New Item Form */
+        .add-item-form {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px dashed #dee2e6;
+            display: none;
+        }
+        
+        .add-item-form.show {
+            display: block;
+        }
+        
+        .add-item-form h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        
+        .form-row input,
+        .form-row textarea,
+        .form-row select {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            width: 100%;
+            padding-left: 15px;
+        }
+        
+        .form-row textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .image-upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .image-upload-area:hover {
+            border-color: #4a6491;
+            background-color: rgba(74, 100, 145, 0.05);
+        }
+        
+        .image-upload-area i {
+            font-size: 2rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .image-upload-text {
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .image-upload-area img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .save-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .menu-items-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-management-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-form-section">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>Smart Canteen</h1>
+                </div>
+                <p class="tagline">Admin Dashboard - Secure Login Required</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i> Invalid admin ID or password. Please try again.
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="adminId">Admin ID</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="adminId" placeholder="Enter admin ID" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter password" required>
+                    </div>
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                </button>
+            </form>
+        </div>
+        
+        <div class="login-sidebar">
+            <div class="sidebar-content">
+                <h2 class="sidebar-title">Secure Admin Access</h2>
+                <p>Access to this dashboard is restricted to authorized canteen staff only.</p>
+                
+                <ul class="features-list">
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="feature-text">
+                            <h3>Secure Authentication</h3>
+                            <p>Protected login with role-based access control.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-utensils"></i>
+                        <div class="feature-text">
+                            <h3>Menu Management</h3>
+                            <p>Add, edit, or delete menu items with images.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-clipboard-list"></i>
+                        <div class="feature-text">
+                            <h3>Order Management</h3>
+                            <p>Track and manage all student orders in real-time.</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="testimonial">
+                    <p>"The admin dashboard provides complete control over canteen operations with excellent security features."</p>
+                    <div class="testimonial-author">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Admin Team, Smart Canteen</span>
+                    </div>
+                </div>
+                
+                <div class="back-home-link">
+                    <a href="index.html">
+                        <i class="fas fa-home"></i> Back to Homepage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Dashboard (Initially Hidden) -->
+    <div class="admin-dashboard" id="adminDashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo-small">
+                <i class="fas fa-utensils"></i>
+                <h1>Smart Canteen</h1>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="active" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" id="ordersLink"><i class="fas fa-clipboard-list"></i> Orders</a></li>
+                <li><a href="#" id="menuLink"><i class="fas fa-utensils"></i> Menu Items</a></li>
+                <li><a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            
+            <div class="admin-info">
+                <div class="admin-avatar">
+                    A
+                </div>
+                <div class="admin-details">
+                    <h3>Admin User</h3>
+                    <p>Canteen Administrator</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2>
+                <div id="currentDate"></div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Orders</h3>
+                        <div class="stat-number" id="totalOrders">0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Pending</h3>
+                        <div class="stat-number" id="pendingOrders">0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Menu Items</h3>
+                        <div class="stat-number" id="menuItemsCount">0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Completed</h3>
+                        <div class="stat-number" id="completedOrders">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Orders Section -->
+            <div class="dashboard-content" id="ordersSection">
+                <h3 style="margin-bottom: 20px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-clipboard-list"></i> Recent Orders
+                </h3>
+                
+                <div class="orders-table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Student</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Orders will be dynamically added here -->
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 40px; color: #666;">
+                                    <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 15px; display: block; color: #ddd;"></i>
+                                    No orders yet
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Menu Items Section -->
+            <div class="menu-management" id="menuSection" style="display: none;">
+                <div class="menu-management-header">
+                    <h3><i class="fas fa-utensils"></i> Menu Items Management</h3>
+                    <button class="add-item-btn" id="addItemBtn">
+                        <i class="fas fa-plus"></i> Add New Item
+                    </button>
+                </div>
+                
+                <!-- Menu Items Grid -->
+                <div class="menu-items-grid" id="menuItemsGrid">
+                    <!-- Menu items will be dynamically added here -->
+                </div>
+                
+                <!-- Add New Item Form -->
+                <div class="add-item-form" id="addItemForm">
+                    <h4><i class="fas fa-plus-circle"></i> Add New Menu Item</h4>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="itemName">Item Name *</label>
+                            <input type="text" id="itemName" placeholder="Enter item name" required>
+                        </div>
+                        <div>
+                            <label for="itemPrice">Price (₹) *</label>
+                            <input type="number" id="itemPrice" placeholder="Enter price" min="0" step="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="itemDescription">Description *</label>
+                            <textarea id="itemDescription" placeholder="Enter item description" required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="itemIcon">Icon Class (FontAwesome)</label>
+                            <input type="text" id="itemIcon" placeholder="fas fa-utensils" value="fas fa-utensils">
+                            <small style="color: #666; font-size: 0.8rem;">Use FontAwesome icon classes like: fas fa-utensils, fas fa-bread-slice, etc.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label>Item Image</label>
+                            <div class="image-upload-area" id="imageUploadArea">
+                                <div id="imageUploadContent">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <div class="image-upload-text">Click to upload item image</div>
+                                    <small style="color: #999;">Recommended: 400x300px, JPG/PNG format</small>
+                                </div>
+                                <img id="imagePreview" style="display: none;">
+                                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancelAddBtn">Cancel</button>
+                        <button type="button" class="save-btn" id="saveItemBtn">Save Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginContainer = document.getElementById('loginContainer');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const dashboardLink = document.getElementById('dashboardLink');
+        const ordersLink = document.getElementById('ordersLink');
+        const menuLink = document.getElementById('menuLink');
+        const logoutLink = document.getElementById('logoutLink');
+        const currentDateElement = document.getElementById('currentDate');
+        const ordersTableBody = document.getElementById('ordersTableBody');
+        const totalOrdersElement = document.getElementById('totalOrders');
+        const pendingOrdersElement = document.getElementById('pendingOrders');
+        const menuItemsCountElement = document.getElementById('menuItemsCount');
+        const completedOrdersElement = document.getElementById('completedOrders');
+        
+        // Menu management elements
+        const menuSection = document.getElementById('menuSection');
+        const menuItemsGrid = document.getElementById('menuItemsGrid');
+        const addItemBtn = document.getElementById('addItemBtn');
+        const addItemForm = document.getElementById('addItemForm');
+        const cancelAddBtn = document.getElementById('cancelAddBtn');
+        const saveItemBtn = document.getElementById('saveItemBtn');
+        const imageUploadArea = document.getElementById('imageUploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const imageUploadContent = document.getElementById('imageUploadContent');
+
+        // Admin credentials
+        const ADMIN_CREDENTIALS = {
+            id: "admin",
+            password: "admin123"
+        };
+
+        // Default menu items (same as student dashboard)
+        const defaultMenuItems = [
+            {
+                id: 1,
+                name: "Parota",
+                description: "Crispy 2 Parota with chutney & sambar.",
+                price: 40,
+                image: "",
+                imageIcon: "fas fa-bread-slice"
+            },
+            {
+                id: 2,
+                name: "Dosa",
+                description: "Crispy set dosa served with chutney & sambar.",
+                price: 40,
+                image: "",
+                imageIcon: "fas fa-pancakes"
+            },
+            {
+                id: 3,
+                name: "Poori",
+                description: "Fried 3 poori with chutney & sambar.",
+                price: 40,
+                image: "",
+                imageIcon: "fas fa-drumstick-bite"
+            },
+            {
+                id: 4,
+                name: "Full Meals",
+                description: "Complete Full meal with rice, sambar, rasam, curd and vegetables.",
+                price: 50,
+                image: "",
+                imageIcon: "fas fa-utensils"
+            },
+            {
+                id: 5,
+                name: "Bajji",
+                description: "Spicy Bajji served with chutney.",
+                price: 5,
+                image: "",
+                imageIcon: "fas fa-pepper-hot"
+            },
+            {
+                id: 6,
+                name: "Curd Rice",
+                description: "Fresh curd rice with tempering.",
+                price: 40,
+                image: "",
+                imageIcon: "fas fa-bowl-rice"
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if already logged in
+            const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            if (isLoggedIn) {
+                showDashboard();
+            }
+            
+            // Initialize menu items in localStorage if not exists
+            if (!localStorage.getItem('canteenMenuItems')) {
+                localStorage.setItem('canteenMenuItems', JSON.stringify(defaultMenuItems));
+            }
+            
+            // Set current date
+            updateCurrentDate();
+            
+            // Event listeners
+            loginForm.addEventListener('submit', handleLogin);
+            dashboardLink.addEventListener('click', () => showSection('dashboard'));
+            ordersLink.addEventListener('click', () => showSection('orders'));
+            menuLink.addEventListener('click', () => showSection('menu'));
+            logoutLink.addEventListener('click', handleLogout);
+            
+            // Menu management events
+            addItemBtn.addEventListener('click', showAddItemForm);
+            cancelAddBtn.addEventListener('click', hideAddItemForm);
+            saveItemBtn.addEventListener('click', saveMenuItem);
+            imageUploadArea.addEventListener('click', () => imageInput.click());
+            imageInput.addEventListener('change', handleImageUpload);
+        });
+
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            currentDateElement.textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // Handle login
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const adminId = document.getElementById('adminId').value;
+            const password = document.getElementById('password').value;
+            
+            if (adminId === ADMIN_CREDENTIALS.id && password === ADMIN_CREDENTIALS.password) {
+                // Successful login
+                localStorage.setItem('adminLoggedIn', 'true');
+                showDashboard();
+            } else {
+                // Failed login
+                errorMessage.classList.add('show');
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            loginContainer.style.display = 'none';
+            adminDashboard.style.display = 'flex';
+            showSection('dashboard');
+            startOrderPolling();
+        }
+
+        // Show different sections
+        function showSection(section) {
+            // Update active nav link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if (section === 'dashboard') {
+                dashboardLink.classList.add('active');
+                loadOrders();
+                updateMenuStats();
+            } else if (section === 'orders') {
+                ordersLink.classList.add('active');
+                loadOrders();
+            } else if (section === 'menu') {
+                menuLink.classList.add('active');
+                loadMenuItems();
+            }
+            
+            // Show/hide sections
+            const ordersSection = document.getElementById('ordersSection');
+            const menuSection = document.getElementById('menuSection');
+            
+            if (section === 'dashboard' || section === 'orders') {
+                ordersSection.style.display = 'block';
+                menuSection.style.display = 'none';
+            } else if (section === 'menu') {
+                ordersSection.style.display = 'none';
+                menuSection.style.display = 'block';
+            }
+        }
+
+        // Handle logout
+        function handleLogout(e) {
+            e.preventDefault();
+            localStorage.removeItem('adminLoggedIn');
+            adminDashboard.style.display = 'none';
+            loginContainer.style.display = 'flex';
+            
+            // Clear form
+            document.getElementById('adminId').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Load orders from localStorage
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('canteenOrders') || '[]');
+            
+            // Update stats
+            updateOrderStats(orders);
+            
+            // Update orders table
+            updateOrdersTable(orders);
+        }
+
+        // Update order statistics
+        function updateOrderStats(orders) {
+            const total = orders.length;
+            const pending = orders.filter(order => order.status === 'pending').length;
+            const completed = orders.filter(order => order.status === 'completed').length;
+            
+            totalOrdersElement.textContent = total;
+            pendingOrdersElement.textContent = pending;
+            completedOrdersElement.textContent = completed;
+        }
+
+        // Update menu items count
+        function updateMenuStats() {
+            const menuItems = JSON.parse(localStorage.getItem('canteenMenuItems') || '[]');
+            menuItemsCountElement.textContent = menuItems.length;
+        }
+
+        // Update orders table
+        function updateOrdersTable(orders) {
+            if (orders.length === 0) {
+                ordersTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #666;">
+                            <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 15px; display: block; color: #ddd;"></i>
+                            No orders yet
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Sort orders by most recent first
+            orders.sort((a, b) => new Date(b.orderTime || 0) - new Date(a.orderTime || 0));
+            
+            ordersTableBody.innerHTML = orders.map(order => {
+                // Format items list
+                let itemsList = '';
+                if (Array.isArray(order.items)) {
+                    itemsList = order.items.map(item => 
+                        `${item.name} x${item.quantity}`
+                    ).join('<br>');
+                } else {
+                    itemsList = order.items || 'N/A';
+                }
+                
+                // Get status badge
+                let statusBadge = '';
+                switch(order.status) {
+                    case 'pending':
+                        statusBadge = '<span class="status-badge status-pending">Pending</span>';
+                        break;
+                    case 'processing':
+                        statusBadge = '<span class="status-badge status-processing">Processing</span>';
+                        break;
+                    case 'ready':
+                        statusBadge = '<span class="status-badge status-ready">Ready</span>';
+                        break;
+                    case 'completed':
+                        statusBadge = '<span class="status-badge status-completed">Completed</span>';
+                        break;
+                    default:
+                        statusBadge = '<span class="status-badge status-pending">Pending</span>';
+                }
+                
+                // Get action buttons based on status
+                let actionButtons = '';
+                switch(order.status) {
+                    case 'pending':
+                        actionButtons = `
+                            <button class="action-btn btn-process" onclick="updateOrderStatus('${order.id}', 'processing')">
+                                <i class="fas fa-play"></i> Process
+                            </button>
+                        `;
+                        break;
+                    case 'processing':
+                        actionButtons = `
+                            <button class="action-btn btn-ready" onclick="updateOrderStatus('${order.id}', 'ready')">
+                                <i class="fas fa-check"></i> Ready
+                            </button>
+                        `;
+                        break;
+                    case 'ready':
+                        actionButtons = `
+                            <button class="action-btn btn-complete" onclick="updateOrderStatus('${order.id}', 'completed')">
+                                <i class="fas fa-check-double"></i> Complete
+                            </button>
+                        `;
+                        break;
+                    case 'completed':
+                        actionButtons = `
+                            <button class="action-btn" style="background-color: #95a5a6; color: white;" disabled>
+                                <i class="fas fa-check-circle"></i> Done
+                            </button>
+                        `;
+                        break;
+                }
+                
+                return `
+                    <tr>
+                        <td class="order-id">${order.id}</td>
+                        <td>${order.studentName || 'Guest'}<br><small>${order.studentUSN || ''}</small></td>
+                        <td>${itemsList}</td>
+                        <td>₹${order.total || 0}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <div class="action-buttons">
+                                ${actionButtons}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Update order status
+        function updateOrderStatus(orderId, newStatus) {
+            let orders = JSON.parse(localStorage.getItem('canteenOrders') || '[]');
+            const orderIndex = orders.findIndex(order => order.id === orderId);
+            
+            if (orderIndex !== -1) {
+                // Update order status
+                orders[orderIndex].status = newStatus;
+                orders[orderIndex].updatedAt = new Date().toISOString();
+                
+                // Save updated orders
+                localStorage.setItem('canteenOrders', JSON.stringify(orders));
+                
+                // Create notification for student
+                const notification = {
+                    orderId: orderId,
+                    status: newStatus,
+                    timestamp: new Date().toISOString(),
+                    message: `Your order ${orderId} status changed to ${newStatus}`
+                };
+                
+                localStorage.setItem(`studentNotification_${orderId}`, JSON.stringify(notification));
+                
+                // Reload orders
+                loadOrders();
+                
+                // Show success message
+                alert(`Order ${orderId} updated to ${newStatus}`);
+            }
+        }
+
+        // Load menu items
+        function loadMenuItems() {
+            const menuItems = JSON.parse(localStorage.getItem('canteenMenuItems') || '[]');
+            menuItemsGrid.innerHTML = '';
+            
+            if (menuItems.length === 0) {
+                menuItemsGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-utensils" style="font-size: 3rem; margin-bottom: 15px; display: block; color: #ddd;"></i>
+                        <p>No menu items found. Add your first item!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            menuItems.forEach(item => {
+                const menuItemCard = document.createElement('div');
+                menuItemCard.className = 'menu-item-card';
+                
+                // Check if image exists in saved images
+                const savedImages = JSON.parse(localStorage.getItem('canteenFoodImages') || '[]');
+                const savedImage = savedImages.find(img => img.id === item.id);
+                const imageUrl = savedImage?.image || item.image || '';
+                
+                menuItemCard.innerHTML = `
+                    <div class="menu-item-image">
+                        ${imageUrl ? 
+                            `<img src="${imageUrl}" alt="${item.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : 
+                            ''
+                        }
+                        <div class="placeholder" style="display: ${imageUrl ? 'none' : 'flex'};">
+                            <i class="${item.imageIcon || 'fas fa-utensils'}"></i>
+                        </div>
+                    </div>
+                    <div class="menu-item-details">
+                        <div class="menu-item-name">${item.name}</div>
+                        <div class="menu-item-price">₹${item.price}</div>
+                        <div class="menu-item-description">${item.description}</div>
+                        <div class="menu-item-actions">
+                            <button class="menu-item-btn edit-item-btn" onclick="editMenuItem(${item.id})">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="menu-item-btn delete-item-btn" onclick="deleteMenuItem(${item.id})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                menuItemsGrid.appendChild(menuItemCard);
+            });
+            
+            updateMenuStats();
+        }
+
+        // Show add item form
+        function showAddItemForm() {
+            addItemForm.classList.add('show');
+            addItemBtn.style.display = 'none';
+            
+            // Reset form
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+            document.getElementById('itemDescription').value = '';
+            document.getElementById('itemIcon').value = 'fas fa-utensils';
+            imagePreview.style.display = 'none';
+            imageUploadContent.style.display = 'block';
+            imageInput.value = '';
+        }
+
+        // Hide add item form
+        function hideAddItemForm() {
+            addItemForm.classList.remove('show');
+            addItemBtn.style.display = 'flex';
+        }
+
+        // Handle image upload
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file (JPG, PNG, etc.)');
+                return;
+            }
+            
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Image size should be less than 2MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                imageUploadContent.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Save menu item
+        function saveMenuItem() {
+            const name = document.getElementById('itemName').value.trim();
+            const price = document.getElementById('itemPrice').value.trim();
+            const description = document.getElementById('itemDescription').value.trim();
+            const icon = document.getElementById('itemIcon').value.trim();
+            const image = imagePreview.style.display === 'block' ? imagePreview.src : '';
+            
+            // Validate
+            if (!name || !price || !description) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (isNaN(price) || Number(price) <= 0) {
+                alert('Please enter a valid price');
+                return;
+            }
+            
+            // Get existing menu items
+            let menuItems = JSON.parse(localStorage.getItem('canteenMenuItems') || '[]');
+            
+            // Create new item
+            const newItem = {
+                id: Date.now(), // Unique ID
+                name: name,
+                price: Number(price),
+                description: description,
+                image: image,
+                imageIcon: icon || 'fas fa-utensils'
+            };
+            
+            // Add to menu items
+            menuItems.push(newItem);
+            localStorage.setItem('canteenMenuItems', JSON.stringify(menuItems));
+            
+            // Save image if uploaded
+            if (image) {
+                const savedImages = JSON.parse(localStorage.getItem('canteenFoodImages') || '[]');
+                savedImages.push({
+                    id: newItem.id,
+                    name: name,
+                    image: image
+                });
+                localStorage.setItem('canteenFoodImages', JSON.stringify(savedImages));
+            }
+            
+            // Hide form and reload
+            hideAddItemForm();
+            loadMenuItems();
+            
+            alert('Menu item added successfully!');
+        }
+
+        // Edit menu item
+        function editMenuItem(itemId) {
+            const menuItems = JSON.parse(localStorage.getItem('canteenMenuItems') || '[]');
+            const item = menuItems.find(item => item.id === itemId);
+            
+            if (!item) {
+                alert('Item not found!');
+                return;
+            }
+            
+            // For now, we'll use a simple prompt for editing
+            const newName = prompt('Enter new item name:', item.name);
+            if (newName === null) return;
+            
+            const newPrice = prompt('Enter new price:', item.price);
+            if (newPrice === null) return;
+            
+            const newDescription = prompt('Enter new description:', item.description);
+            if (newDescription === null) return;
+            
+            // Update item
+            item.name = newName;
+            item.price = Number(newPrice);
+            item.description = newDescription;
+            
+            // Save
+            localStorage.setItem('canteenMenuItems', JSON.stringify(menuItems));
+            loadMenuItems();
+            
+            alert('Item updated successfully!');
+        }
+
+        // Delete menu item
+        function deleteMenuItem(itemId) {
+            if (!confirm('Are you sure you want to delete this menu item?')) {
+                return;
+            }
+            
+            let menuItems = JSON.parse(localStorage.getItem('canteenMenuItems') || '[]');
+            menuItems = menuItems.filter(item => item.id !== itemId);
+            
+            // Also remove from saved images
+            let savedImages = JSON.parse(localStorage.getItem('canteenFoodImages') || '[]');
+            savedImages = savedImages.filter(img => img.id !== itemId);
+            
+            localStorage.setItem('canteenMenuItems', JSON.stringify(menuItems));
+            localStorage.setItem('canteenFoodImages', JSON.stringify(savedImages));
+            
+            loadMenuItems();
+            alert('Menu item deleted successfully!');
+        }
+
+        // Start polling for new orders
+        function startOrderPolling() {
+            // Check for new orders every 5 seconds
+            setInterval(() => {
+                loadOrders();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
