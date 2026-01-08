@@ -581,7 +581,7 @@
         Item added to cart successfully!
     </div>
 
-    <script>
+       <script>
         // Menu data with descriptions, prices, and image URLs
         const menuItems = [
             {
@@ -589,7 +589,7 @@
                 name: "Parota",
                 description: "Crispy 2 Parota with chutney & sambar.",
                 price: 40,
-                image: "", // Empty initially - will be filled with uploaded images
+                image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80",
                 imageIcon: "fas fa-bread-slice"
             },
             {
@@ -597,7 +597,7 @@
                 name: "Dosa",
                 description: "Crispy set dosa served with chutney & sambar.",
                 price: 40,
-                image: "",
+                image: "https://images.unsplash.com/photo-1633510989822-67d4f5e8d5f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80",
                 imageIcon: "fas fa-pancakes"
             },
             {
@@ -605,7 +605,7 @@
                 name: "Poori",
                 description: "Fried 3 poori with chutney & sambar.",
                 price: 40,
-                image: "",
+                image: "https://images.unsplash.com/photo-1631929363973-6c6a34d37584?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80",
                 imageIcon: "fas fa-drumstick-bite"
             },
             {
@@ -613,7 +613,7 @@
                 name: "Full Meals",
                 description: "Complete Full meal with rice, sambar, rasam, curd and vegetables.",
                 price: 50,
-                image: "",
+                image: "https://images.unsplash.com/photo-1563379091339-03246963d9d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80",
                 imageIcon: "fas fa-utensils"
             },
             {
@@ -621,7 +621,7 @@
                 name: "Bajji",
                 description: "Spicy Bajji served with chutney.",
                 price: 5,
-                image: "",
+                image: "https://images.unsplash.com/photo-1585937421612-70ca003675ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80",
                 imageIcon: "fas fa-pepper-hot"
             },
             {
@@ -629,7 +629,7 @@
                 name: "Curd Rice",
                 description: "Fresh curd rice with tempering.",
                 price: 40,
-                image: "",
+                image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80",
                 imageIcon: "fas fa-bowl-rice"
             }
         ];
@@ -685,10 +685,10 @@
                     <h4>${item.name}</h4>
                     <div style="position: relative;">
                         <img class="image-preview" id="preview-${item.id}" 
-                             src="${item.image || ''}" 
+                             src="${item.image}" 
                              alt="${item.name}"
                              onerror="this.src=''; this.nextElementSibling.style.display='flex'">
-                        <div class="placeholder-icon" style="display: ${item.image ? 'none' : 'flex'}; 
+                        <div class="placeholder-icon" style="display: none; 
                              position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
                              align-items: center; justify-content: center; background-color: #f8f9fa;">
                             <i class="${item.imageIcon}"></i>
@@ -700,7 +700,7 @@
                         <i class="fas fa-upload"></i> Upload Image
                     </button>
                     <div class="image-status" id="status-${item.id}">
-                        ${item.image ? '<span class="uploaded">✓ Image uploaded</span>' : 'No image uploaded'}
+                        <span class="uploaded">✓ Default image loaded</span>
                     </div>
                 `;
                 
@@ -754,7 +754,7 @@
                 
                 // Update the status
                 const status = document.getElementById(`status-${itemId}`);
-                status.innerHTML = '<span class="uploaded">✓ Image uploaded</span>';
+                status.innerHTML = '<span class="uploaded">✓ Custom image uploaded</span>';
                 
                 // Update the menuItems array
                 const itemIndex = menuItems.findIndex(item => item.id === itemId);
@@ -816,15 +816,10 @@
                 const itemCard = document.createElement('div');
                 itemCard.className = 'item-card';
                 
-                // Determine if we should show image or icon
-                const imageContent = item.image 
-                    ? `<img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`
-                    : '';
-                
                 itemCard.innerHTML = `
                     <div class="item-image">
-                        ${imageContent}
-                        <div class="placeholder-icon" style="display: ${item.image ? 'none' : 'flex'}">
+                        <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="placeholder-icon" style="display: none">
                             <i class="${item.imageIcon}"></i>
                         </div>
                     </div>
@@ -897,7 +892,7 @@
                                 <button class="quantity-btn increase-quantity" data-id="${item.id}">+</button>
                             </div>
                         </div>
-                        <div class="cart-item-price">₹${item.price * item.quantity}</div>
+                        <div class="cart-item-price">₹${item.price * item.quantity}</td>
                     `;
                     
                     cartItemsContainer.appendChild(cartItemElement);
@@ -956,71 +951,91 @@
         }
         
         // Place order
-        // In student_dashboard.html
-function placeOrder() {
-    if (cart.length === 0) {
-        showNotification("Your cart is empty! Add items before placing an order.");
-        return;
-    }
-    
-    // Get student info
-    const studentName = document.getElementById('studentName').value || "Guest";
-    const studentUSN = document.getElementById('studentUSN').value || "Not provided";
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-    // Generate order ID with timestamp
-    const orderId = `ORD-${Date.now().toString().slice(-6)}`;
-    const orderTime = new Date().toISOString();
-    
-    // Create order object
-    const newOrder = {
-        id: orderId,
-        studentName: studentName,
-        studentUSN: studentUSN,
-        items: [...cart], // Copy cart items
-        total: total,
-        status: "pending",
-        paymentMethod: "pending", // Default to pending payment
-        paymentStatus: "pending",
-        orderTime: orderTime,
-        estimatedReadyTime: "", // Will be set by admin
-        notes: "",
-        preparationTime: "" // Will be set by admin
-    };
-    
-    // Get existing orders from localStorage
-    let allOrders = JSON.parse(localStorage.getItem('canteenOrders')) || [];
-    
-    // Add new order
-    allOrders.unshift(newOrder); // Add to beginning
-    
-    // Save to localStorage
-    localStorage.setItem('canteenOrders', JSON.stringify(allOrders));
-    
-    // Also save to a special key for student orders
-    const studentOrder = {
-        id: orderId,
-        status: "pending",
-        total: total,
-        time: new Date().toLocaleTimeString(),
-        date: new Date().toLocaleDateString()
-    };
-    
-    localStorage.setItem('lastStudentOrder', JSON.stringify(studentOrder));
-    
-    // Show order confirmation
-    const orderSummary = cart.map(item => `${item.name} x${item.quantity} - ₹${item.price * item.quantity}`).join('\n');
-    const orderMessage = `Order Placed Successfully!\n\nOrder ID: ${orderId}\nStudent: ${studentName}\nUSN: ${studentUSN}\n\nOrder Details:\n${orderSummary}\n\nTotal: ₹${total}\n\nThank you for your order!`;
-    
-    alert(orderMessage);
-    
-    // Clear cart after order
-    cart = [];
-    updateCartDisplay();
-    
-    showNotification("Order placed successfully! Your order ID is " + orderId);
-}
+        function placeOrder() {
+            if (cart.length === 0) {
+                showNotification("Your cart is empty! Add items before placing an order.");
+                return;
+            }
+            
+            // Get student info
+            const studentName = document.getElementById('studentName').value || "Guest";
+            const studentUSN = document.getElementById('studentUSN').value || "Not provided";
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Generate order ID with timestamp
+            const orderId = `ORD-${Date.now().toString().slice(-6)}`;
+            const orderTime = new Date().toISOString();
+            
+            // Create order object
+            const newOrder = {
+                id: orderId,
+                studentName: studentName,
+                studentUSN: studentUSN,
+                items: [...cart], // Copy cart items
+                total: total,
+                status: "pending",
+                paymentMethod: "pending", // Default to pending payment
+                paymentStatus: "pending",
+                orderTime: orderTime,
+                estimatedReadyTime: "", // Will be set by admin
+                notes: "",
+                preparationTime: "" // Will be set by admin
+            };
+            
+            // Get existing orders from localStorage
+            let allOrders = JSON.parse(localStorage.getItem('canteenOrders')) || [];
+            
+            // Add new order
+            allOrders.unshift(newOrder); // Add to beginning
+            
+            // Save to localStorage
+            localStorage.setItem('canteenOrders', JSON.stringify(allOrders));
+            
+            // Also save to a special key for student orders
+            const studentOrder = {
+                id: orderId,
+                status: "pending",
+                total: total,
+                time: new Date().toLocaleTimeString(),
+                date: new Date().toLocaleDateString()
+            };
+            
+            localStorage.setItem('lastStudentOrder', JSON.stringify(studentOrder));
+            
+            // Show order confirmation
+            const orderSummary = cart.map(item => `${item.name} x${item.quantity} - ₹${item.price * item.quantity}`).join('\n');
+            const orderMessage = `Order Placed Successfully!\n\nOrder ID: ${orderId}\nStudent: ${studentName}\nUSN: ${studentUSN}\n\nOrder Details:\n${orderSummary}\n\nTotal: ₹${total}\n\nThank you for your order!`;
+            
+            alert(orderMessage);
+            
+            // Clear cart after order
+            cart = [];
+            updateCartDisplay();
+            
+            showNotification("Order placed successfully! Your order ID is " + orderId);
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Start shopping
+        function startShopping() {
+            // Get student info
+            studentName = document.getElementById('studentName').value || "Guest";
+            studentUSN = document.getElementById('studentUSN').value || "Not provided";
+            
+            // Enable cart functionality
+            showNotification(`Welcome ${studentName}! Start adding items to your cart.`);
+        }
+        
         // Initialize the dashboard when the page loads
         document.addEventListener('DOMContentLoaded', initDashboard);
     </script>
